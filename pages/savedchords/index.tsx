@@ -80,7 +80,7 @@ export default function MySongs({ meX }: IMex) {
     }
     getUser()
 
-  }, [])
+  }, [contextApi.nameContext, meX.id, meX.lists_id])
   console.log('data', data)
   const onlySongs: {
     actual_songs: Array<any>
