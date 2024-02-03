@@ -38,6 +38,7 @@ const RegisterForm = () => {
       );
       localStorage.setItem('authToken', response.data.authToken)
       Cookies.set('authToken', response.data.authToken, { expires: 7 });
+      Cookies.set('me', me.data.id, { expires: 7 })
       //context.setNameContext(response.data.authToken)
       context.setMe(me)
       router.push('/mysongs')

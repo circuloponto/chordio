@@ -65,7 +65,7 @@ function Navbar(): JSX.Element {
                   <>
                     <Link className='link' href="/login">Login</Link>
                     <Link className='link' href="/register">Register</Link>
-                    <Link onClick={handleLogOut} className='link' href="/">Logout</Link>
+                    {/* <Link onClick={handleLogOut} className='link' href="/">Logout</Link> */}
                   </>
                 )}
 
