@@ -8,8 +8,8 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 /* import '../../styles/globals.scss'; */
 //import { Chord } from 'tonal';
-import { chords } from './chords';
-import Chord from './components/Chord';
+import { chords } from '../../chords.js';
+import Chord from '../../components/Chord.tsx';
 import { MdKeyboardDoubleArrowUp } from 'react-icons/md';
 import { MdKeyboardDoubleArrowDown } from 'react-icons/md';
 import { MdKeyboardArrowUp } from 'react-icons/md';
