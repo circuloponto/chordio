@@ -39,20 +39,20 @@ export default function Home() {
   //const regex = /^[A-Ga-g](#|b)?(?:maj|min|aug|dim)?(?:[0-9]|sus|add)?(?:\/[A-Ga-g](#|b)?)?$/
 
   let found: string[] | null = input.match(regex);
-  console.log('found', found);
+  //console.log('found', found);
 
 
   const filterdFound: Set<string> = new Set(found);
-  console.log('filterdFound', filterdFound);
-  console.log('input', input)
+  // console.log('filterdFound', filterdFound);
+  // console.log('input', input)
   const sanitizedInput = input.replace(/\n/g, '')
-  console.log('sanitizedInput', sanitizedInput)
+  //console.log('sanitizedInput', sanitizedInput)
   const arraySanitized = sanitizedInput.split(' ')
-  console.log('arraySanitized', arraySanitized)
+  //console.log('arraySanitized', arraySanitized)
   const filterdSanitized = arraySanitized.filter(n => n)
-  console.log('filterdSanitized', filterdSanitized)
+  //console.log('filterdSanitized', filterdSanitized)
   const title = filterdSanitized[0]
-  console.log('title', title)
+  //console.log('title', title)
   const handleCheck = () => {
     setChordObj([]);
     filterdFound?.forEach((chord, i) => {
@@ -102,168 +102,326 @@ export default function Home() {
       'B',
     ];
     const transcribeInterval = Number(currentTarget.getAttribute('data-tone'));
-    setHowMuch(prev => prev += Number(transcribeInterval))
     console.log('transcribeInterval', transcribeInterval)
-    console.log(currentTarget.getAttribute('data-tone'));
+
+    setHowMuch(prev => prev += Number(transcribeInterval))
+    //console.log('transcribeInterval', transcribeInterval)
+    //console.log(currentTarget.getAttribute('data-tone'));
     const onlyNotes = /([ABCDEFG](?:#|b)?)/gm;
     //const onlyChord = //([a-z]+)/g;
     setFoundX(found);
-    let foundChords;
-    if (foundX) {
+    let foundChords = [...foundX];
 
-      foundChords = [...foundX];
 
-      console.log(foundChords);
-      const parsedNotes = foundChords.map((chord) => {
-        //.log('chord', chord);
-        const parsed = chord.match(onlyNotes);
-        //console.log('parsed', parsed);
-        return parsed;
-      });
-      const parsedNotesSharp = parsedNotes
-        .map((note: any) => {
-          //console.log('note', note);
-          //if (note !== null) {
-          if (note[0].endsWith('#')) {
-            const index = matrixSharp.indexOf(note[0]);
-            note = matrixFlat[index];
-            console.log('index from parsedNotesSharp', index);
-          }
-          //}
 
-          return note;
-        })
-        .flat();
-      console.log('parsedNotesSharp', parsedNotesSharp);
-      console.log('parsedNotes', parsedNotes);
-      const parsedChord = foundChords.map((chord) => {
-        const parsed = chord.replace(/([ABCDEFG](?:#|b)?)/g, '');
-        //console.log('parsed', parsed);
-        return parsed;
-      });
-      console.log('parsedChord', parsedChord);
-      const transposedRoots = parsedNotesSharp.map((note, i) => {
+
+    console.log('foundChords', foundChords);
+    const parsedNotes = foundChords.map((chord) => {
+      //.log('chord', chord);
+      const parsed = chord.match(onlyNotes);
+      //console.log('parsed', parsed);
+      return parsed;
+    });
+    const parsedNotesSharp = parsedNotes
+      .map((note: any) => {
         //console.log('note', note);
-        let index;
-        if (note !== null) {
-          index = matrixFlat.indexOf(note);
+        //if (note !== null) {
+        if (note[0].endsWith('#')) {
+          const index = matrixSharp.indexOf(note[0]);
+          note = matrixFlat[index];
+          console.log('index from parsedNotesSharp', index);
         }
+        //}
 
-        /*  console.log(
-           'index + transcribeInterval',
-           index + Number(transcribeInterval),
-           'index',
-           index
-         ); */
-        let newIndex: number = 0;
-        if (index !== undefined) {
-          newIndex = index + Number(transcribeInterval)
-        }
-
-        let val =
-          matrixFlat[
-          ((newIndex % matrixFlat.length) + matrixFlat.length) %
-          matrixFlat.length
-          ];
-        //const newNote = matrixFlat[index + transcribeInterval];
-        // console.log('newNote', newNote);
-        console.log('val', val);
-
-        return val;
-      });
-      setChordObj([]);
-      console.log('transposedRoots', transposedRoots);
-      const join: string[] = transposedRoots.map((note, i) => note + parsedChord[i]);
-      console.log('join', join);
-      interface MyObjLayout {
-        [key: string]: string;
-      }
-      let foundJoinObj: MyObjLayout = {};
-      if (found) {
-        const foundJoin = found.map((chord, i) => {
-          foundJoinObj[chord] = join[i];
-          return { [chord]: join[i] };
-        });
-      }
-      console.log('foundJoinobj', foundJoinObj);
-      const filterdFoundFinal = new Set(join);
-      console.log('filterdFoundFinal', filterdFoundFinal);
-      filterdFoundFinal.forEach((chord, i) => {
-        console.log('chord', chord);
-        const chordRes = chords(chord);
-        const positions = chordRes[0].positions;
-        console.log('positions', positions);
-        console.log('chordRes', chordRes);
-        setChordObj((prev) => [...prev, { positions, chordName: chord }]);
-        //found = join;
-        setFoundX(join);
-      });
-
-      setFoundX(join);
-      console.log('foundX', foundX);
-      console.log('join', join);
-      console.log('input', input);
-      console.log('newLine', newLine);
-      const obj = {}
-      const arrayLines: string[] | undefined = input.split(/\n/)
-      console.log('arrayLines', arrayLines)
-      /* for (let i = 0; i < foundX.length; i++) {
-        const element = foundX[i];
-        obj[foundX[i]] = join[i]
-  
-      } */
-
-      const founXSet = new Set(foundX)
-      const finalFoundX = Array.from(founXSet);
-      const joinSet = new Set(join)
-      const finalJoin = Array.from(joinSet);
-      console.log('finalFoundX', finalFoundX)
-      console.log('finalJoin', finalJoin)
-      console.log('obj', obj)
-      let newInput = input
-      arrayLines.forEach((item, i) => {
-        console.log('item', item)
-        for (let j = 0; j < finalFoundX.length; j++) {
-          const chord = finalFoundX[j];
-          console.log('chord', chord)
-          if (item.includes(chord)) {
-            let chords = item.match(regex);
-            const changedChords: string[] | undefined = chords?.map((chord, i) => {
-              const index = finalFoundX.indexOf(chord)
-              return finalJoin[index]
-            })
-            console.log('chords', chords)
-            console.log('changedChords', changedChords)
-            if (changedChords) {
-
-              arrayLines[i] = changedChords.join(' ')
-            }
-            //arrayLines[i].replace(chord, finalJoin[j])
-          }
-
-        }
-        console.log('arrayLines', arrayLines)
-        setInput(arrayLines.join('\n'))
+        return note;
       })
-      // foundX.forEach((chord, i) => {
+      .flat();
+    console.log('parsedNotesSharp', parsedNotesSharp);
+    console.log('parsedNotes', parsedNotes);
+    const parsedChord = foundChords.map((chord) => {
+      const parsed = chord.replace(/([ABCDEFG](?:#|b)?)/g, '');
+      //console.log('parsed', parsed);
+      return parsed;
+    });
+    console.log('parsedChord', parsedChord);
+    const transposedRoots = parsedNotesSharp.map((note, i) => {
+      //console.log('note', note);
+      let index = matrixFlat.indexOf(note)
+      let newIndex: number = 0;
+      if (index !== undefined) {
+        newIndex = index + transcribeInterval
+      }
 
-      //   // newInput.replaceAll(chord, join[i]);
-      //   newInput.split(chord).join(join[i])
-      //   setInput(newInput)
-      // })
-      console.log('founXSet', founXSet)
-      finalFoundX.forEach((chord, i) => {
-        console.log('target chord', chord, 'new chord', finalJoin[i])
-        //newInput = newInput.replaceAll(chord, finalJoin[i]);
-        while (newInput.includes(chord)) {
+      let val =
+        matrixFlat[
+        ((newIndex % matrixFlat.length) + matrixFlat.length) %
+        matrixFlat.length
+        ];
+      //const newNote = matrixFlat[index + transcribeInterval];
+      // console.log('newNote', newNote);
+      console.log('val', val);
 
-          newInput = newInput.replace(chord, finalJoin[i]);
-        }
-      })
-
-      console.log('inputFinal', input)
-      console.log('newInput', newInput)
+      return val;
+    });
+    setChordObj([]);
+    console.log('transposedRoots', transposedRoots);
+    // juntar as roots transpostas com a qualidade do acorde
+    const join: string[] = transposedRoots.map((note, i) => note + parsedChord[i]);
+    console.log('join', join);
+    interface MyObjLayout {
+      [key: string]: string;
     }
+    let foundJoinObj: MyObjLayout = {};
+    if (found) {
+      const foundJoin = found.map((chord, i) => {
+        foundJoinObj[chord] = join[i];
+        return { [chord]: join[i] };
+      });
+    }
+    console.log('foundJoinobj', foundJoinObj);
+    const filterdFoundFinal = new Set(join);
+    console.log('filterdFoundFinal', filterdFoundFinal);
+    filterdFoundFinal.forEach((chord, i) => {
+      console.log('chord', chord);
+      const chordRes = chords(chord);
+      const positions = chordRes[0].positions;
+      console.log('positions', positions);
+      console.log('chordRes', chordRes);
+      setChordObj((prev) => [...prev, { positions, chordName: chord }]);
+      //found = join;
+      setFoundX(join);
+    });
+
+    setFoundX(join);
+    console.log('foundX', foundX);
+    console.log('join', join);
+    console.log('input', input);
+    console.log('newLine', newLine);
+    const obj = {}
+    const arrayLines: string[] | undefined = input.split(/\n/)
+    console.log('arrayLines', arrayLines)
+    /* for (let i = 0; i < foundX.length; i++) {
+      const element = foundX[i];
+      obj[foundX[i]] = join[i]
+
+    } */
+
+    const founXSet = new Set(foundX)
+    const finalFoundX = Array.from(founXSet);
+    const joinSet = new Set(join)
+    const finalJoin = Array.from(joinSet);
+    console.log('finalFoundX', finalFoundX)
+    console.log('finalJoin', finalJoin)
+    console.log('obj', obj)
+    let newInput = input
+    arrayLines.forEach((item, i) => {
+      console.log('item', item)
+      for (let j = 0; j < finalFoundX.length; j++) {
+        const chord = finalFoundX[j];
+        console.log('chord', chord)
+        if (item.includes(chord)) {
+          let chords = item.match(regex);
+          const changedChords: string[] | undefined = chords?.map((chord, i) => {
+            const index = finalFoundX.indexOf(chord)
+            return finalJoin[index]
+          })
+          console.log('chords', chords)
+          console.log('changedChords', changedChords)
+          if (changedChords) {
+
+            arrayLines[i] = changedChords.join(' ')
+          }
+          //arrayLines[i].replace(chord, finalJoin[j])
+        }
+
+      }
+      console.log('arrayLines', arrayLines)
+      setInput(arrayLines.join('\n'))
+    })
+    // foundX.forEach((chord, i) => {
+
+    //   // newInput.replaceAll(chord, join[i]);
+    //   newInput.split(chord).join(join[i])
+    //   setInput(newInput)
+    // })
+    console.log('founXSet', founXSet)
+    finalFoundX.forEach((chord, i) => {
+      console.log('target chord', chord, 'new chord', finalJoin[i])
+      //newInput = newInput.replaceAll(chord, finalJoin[i]);
+      while (newInput.includes(chord)) {
+
+        newInput = newInput.replace(chord, finalJoin[i]);
+      }
+    })
+
+    console.log('inputFinal', input)
+    console.log('newInput', newInput)
+
+  }
+  const handleDownOneTone = ({ target, currentTarget }: React.MouseEvent<HTMLButtonElement>) => {
+    const matrixSharp = [
+      'C',
+      'C#',
+      'D',
+      'D#',
+      'E',
+      'F',
+      'F#',
+      'G',
+      'G#',
+      'A',
+      'A#',
+      'B',
+    ];
+    const matrixFlat = [
+      'C',
+      'Db',
+      'D',
+      'Eb',
+      'E',
+      'F',
+      'Gb',
+      'G',
+      'Ab',
+      'A',
+      'Bb',
+      'B',
+    ];
+    const much = howMuch - 1
+    console.log('howMuchbefore', howMuch)
+    setHowMuch(much)
+    console.log('howMuchafter', howMuch)
+    const onlyNotes = /([ABCDEFG](?:#|b)?)/gm;
+    //const onlyChord = //([a-z]+)/g;
+    setFoundX(found);
+    let foundChords = [...foundX];
+    console.log('foundChords', foundChords);
+    // array onde retiramos a qualidade do acorde e ficamos com a root
+    const parsedNotes = foundChords.map((chord) => {
+      //.log('chord', chord);
+      const parsed = chord.match(onlyNotes);
+      //console.log('parsed', parsed);
+      return parsed;
+    });
+    console.log('parsedNotes', parsedNotes);
+    const parsedNotesSharp = parsedNotes
+      .map((note: any) => {
+        //console.log('note', note);
+        //if (note !== null) {
+        if (note[0].endsWith('#')) {
+          const index = matrixSharp.indexOf(note[0]);
+          note = matrixFlat[index];
+          console.log('index from parsedNotesSharp', index);
+        }
+        //}
+
+        return note;
+      })
+      .flat();
+    console.log('parsedNotesSharp', parsedNotesSharp);
+    // é um array com a qualidade do acorde
+    const parsedChord = foundChords.map((chord) => {
+      const parsed = chord.replace(/([ABCDEFG](?:#|b)?)/g, '');
+      //console.log('parsed', parsed);
+      return parsed;
+    });
+    console.log('parsedChord', parsedChord);
+    // array com as roots transpostas para -1 semitom
+    const transposedRoots = parsedNotesSharp.map((note, i) => {
+      //console.log('note', note);
+      let index = matrixFlat.indexOf(note)
+      let newIndex = index - 1
+      let val =
+        matrixFlat[
+        ((newIndex % matrixFlat.length) + matrixFlat.length) %
+        matrixFlat.length
+        ];
+      //const newNote = matrixFlat[index + transcribeInterval];
+      // console.log('newNote', newNote);
+      console.log('val', val);
+
+      return val;
+    });
+    setChordObj([]);
+    console.log('transposedRoots', transposedRoots);
+    // array com as roots transpostas mais a qualidade do acorde
+    const join: string[] = transposedRoots.map((note, i) => note + parsedChord[i]);
+    console.log('join', join);
+    interface MyObjLayout {
+      [key: string]: string;
+    }
+    let foundJoinObj: MyObjLayout = {};
+    if (found) {
+      const foundJoin = found.map((chord, i) => {
+        foundJoinObj[chord] = join[i];
+        return { [chord]: join[i] };
+      });
+    }
+    console.log('foundJoinobj', foundJoinObj);
+    const filterdFoundFinal = new Set(join);
+    console.log('filterdFoundFinal', filterdFoundFinal);
+    filterdFoundFinal.forEach((chord, i) => {
+      console.log('chord', chord);
+      const chordRes = chords(chord);
+      const positions = chordRes[0].positions;
+      console.log('positions', positions);
+      console.log('chordRes', chordRes);
+      setChordObj((prev) => [...prev, { positions, chordName: chord }]);
+      //found = join;
+      setFoundX(join);
+    });
+
+    setFoundX(join);
+    console.log('foundX', foundX);
+    console.log('join', join);
+    const obj = {}
+    const arrayLines: string[] | undefined = input.split(/\n/)
+    console.log('arrayLines', arrayLines)
+    /* for (let i = 0; i < foundX.length; i++) {
+      const element = foundX[i];
+      obj[foundX[i]] = join[i]
+
+    } */
+
+    const founXSet = new Set(foundX)
+    const finalFoundX = Array.from(founXSet);
+    const joinSet = new Set(join)
+    const finalJoin = Array.from(joinSet);
+    console.log('finalFoundX', finalFoundX)
+    console.log('finalJoin', finalJoin)
+    console.log('obj', obj)
+    let newInput = input
+    arrayLines.forEach((item, i) => {
+      console.log('item', item)
+      for (let j = 0; j < finalFoundX.length; j++) {
+        const chord = finalFoundX[j];
+        console.log('chord', chord)
+        if (item.includes(chord)) {
+          let chords = item.match(regex);
+          const changedChords: string[] | undefined = chords?.map((chord, i) => {
+            const index = finalFoundX.indexOf(chord)
+            return finalJoin[index]
+          })
+          console.log('chords', chords)
+          console.log('changedChords', changedChords)
+          if (changedChords) {
+
+            arrayLines[i] = changedChords.join(' ')
+          }
+          //arrayLines[i].replace(chord, finalJoin[j])
+        }
+
+      }
+      console.log('arrayLines', arrayLines)
+      setInput(arrayLines.join('\n'))
+    })
+    // foundX.forEach((chord, i) => {
+
+    //   // newInput.replaceAll(chord, join[i]);
+    //   newInput.split(chord).join(join[i])
+    //   setInput(newInput)
+    // })
+
   }
   const handleRedirectModal = () => {
 
@@ -318,7 +476,7 @@ export default function Home() {
                   <MdKeyboardArrowUp />
                   <span className="tooltiptext">move a semitone up</span>
                 </button>
-                <button data-tone={-1} onClick={handleUpOneTone}>
+                <button data-tone={-1} onClick={handleDownOneTone}>
                   <MdKeyboardArrowDown />
                   <span className="tooltiptext">move a semitone down</span>
                 </button>

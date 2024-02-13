@@ -12,16 +12,16 @@ interface ChordProps {
   howMuch?: number;
 }
 const Chord = ({ chord, howMuch }: ChordProps) => {
-  console.log('chord', chord);
+  //console.log('chord', chord);
   //console.log('howMuch', howMuch);
   //console.log('chord.positions', chord.positions);
   const chordPositions = chord.positions.reverse();
-  console.log('chordPositions', chordPositions);
+  //console.log('chordPositions', chordPositions);
   const positions = chord.positions.filter((item) => item !== 'x');
   const parsedPositions = positions.map((item) => Number(item));
-  console.log('parsedPositions', parsedPositions);
+  //console.log('parsedPositions', parsedPositions);
   const min = Math.min(...parsedPositions);
-  console.log('min', min);
+  //console.log('min', min);
   let zeroBased;
   if (min === 0) {
     zeroBased = [
@@ -78,7 +78,7 @@ const Chord = ({ chord, howMuch }: ChordProps) => {
                   //   Number(chordPositions[5 - i]) === fret
                   // );
                   const check = Number(chordPositions[5 - i]) === Number(fret);
-                  console.log('check', check);
+                  //console.log('check', check);
                   return (
                     <div
                       //suppressHydrationWarning={true}
