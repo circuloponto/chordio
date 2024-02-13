@@ -313,7 +313,7 @@ export default function MySongs({ meX }) {
     console.log('newInput', newInput)
   }
 
-  const handleDownOneTone = ({ target, currentTarget }: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDownOneTone = ({ target, currentTarget }) => {
     const matrixSharp = [
       'C',
       'C#',
