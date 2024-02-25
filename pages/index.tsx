@@ -32,6 +32,7 @@ export default function Home() {
   const [howMuch, setHowMuch] = useState<number>(0);
   const [modal, setModal] = useState<boolean>(false);
   const [overlay, setOverlay] = useState<boolean>(false);
+  const [inputTitle, setInputTitle] = useState('')
   const regex =
     /\b(?:G,C,D|A,B,C|E,C,D)|([ABCDEFG](?:#|b)?)(?:\/[ABCDEFG][b|#]?)?(?:(?:(?:maj|min|sus|add|aug|dim)(?:\d{0,2}(?:#\d{1,2}|sus\d)?)?)|(?:m\d{0,2}(?:(?:maj|add|#)\d{0,2})?)|(?:-?\d{0,2}(?:\([^)]*\)|#\d{1,2})?))?\b/g;
   const regex2 =
@@ -488,6 +489,7 @@ export default function Home() {
               </div>
 
               <div className="title">transposed semitones: <span className="howMuch">{howMuch}</span></div>
+              <input type="text" placeholder="title song here" className="inputTitle" value={inputTitle} onChange={(e) => setInputTitle(e.target.value)} />
             </div>
           </div>
         </div>

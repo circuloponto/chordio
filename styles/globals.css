@@ -208,6 +208,7 @@ html {
     display: flex;
   }
 }
+
 /* transposer */
 .container {
   display: flex;
@@ -218,6 +219,7 @@ html {
   height: calc(100vh - 100px);
   margin: 10px 0 0 0;
 }
+
 .content {
   display: flex;
   flex-direction: column;
@@ -231,6 +233,7 @@ html {
   justify-content: center;
   align-items: center;
 }
+
 .inputcontainer {
   width: 100vw;
   height: 400px;
@@ -239,6 +242,7 @@ html {
   align-items: center;
   flex-direction: column;
 }
+
 .textArea {
   width: 90vw;
   height: 300px;
@@ -259,6 +263,7 @@ html {
   background: #f4bd07;
   box-shadow: 20px 20px 60px #232322, -20px -20px 60px #262625;
 }
+
 .chords {
   display: flex;
   flex-direction: row;
@@ -382,6 +387,31 @@ html {
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
+}
+@media (max-height: 750px) {
+  .landingPage {
+    height: calc(100vh - 110px);
+    margin: 60px 0 0 0;
+  }
+  .container {
+    height: 100%;
+  }
+  .layout {
+    height: 200px;
+  }
+  .inputcontainer {
+    height: 200px;
+  }
+  .textArea {
+    height: 80%;
+  }
+  .buttons {
+    height: 110px;
+  }
+  .buttons button {
+    padding: 0px;
+    height: 30px;
+  }
 }
 /* Chord */
 /* .chords {

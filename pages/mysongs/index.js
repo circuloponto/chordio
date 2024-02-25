@@ -563,57 +563,59 @@ export default function MySongs({ meX }) {
   // }, [chordObj, input, inputTitle]);
 
   return (
-    <div className='container'>
-      {showModal && (
-        <SaveModal setShowModal={setShowModal} />
-      )}
-      {modal && (
-        <ConfirmSavemodal setShowModal={setModal} />
-      )}
+    <div className='landingPage'>
+      <div className='container'>
+        {showModal && (
+          <SaveModal setShowModal={setShowModal} />
+        )}
+        {modal && (
+          <ConfirmSavemodal setShowModal={setModal} />
+        )}
 
-      <div className='chords'>
+        <div className='chords'>
 
-        {chordObj?.map((chor) => {
-          return <Chord key={chor.chordName} chord={chor} howMuch={howMuch} />;
-        })}
-      </div>
-      <div className="layout">
-        <div className="inputcontainer">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            name=""
-            id=""
-            cols={30}
-            rows={10}
-            className="textArea"
-            placeholder="paste your lyrics and chords here"
-          ></textarea>
-          <div className="buttons">
-            <button onClick={handleCheck}>Check Song</button>
-            <button data-tone={2} onClick={handleUpOneTone}>
-              <MdKeyboardDoubleArrowUp />
-              <span className="tooltiptext">move a tone up</span>
-            </button>
-            <button data-tone={1} onClick={handleUpOneTone}>
-              <MdKeyboardArrowUp />
-              <span className="tooltiptext">move a semitone up</span>
-            </button>
-            <button data-tone={-1} onClick={handleDownOneTone}>
-              <MdKeyboardArrowDown />
-              <span className="tooltiptext">move a semitone down</span>
-            </button>
-            <button data-tone={-2} onClick={handleUpOneTone}>
-              <MdKeyboardDoubleArrowDown />
-              <span className="tooltiptext">move a tone down</span>
-            </button>
-            <button onClick={handleSave}>SAVE</button>
-          </div>
-          <div className="title">transposed semitones: <span className="howMuch">{howMuch}</span></div>
-
+          {chordObj?.map((chor) => {
+            return <Chord key={chor.chordName} chord={chor} howMuch={howMuch} />;
+          })}
         </div>
+        <div className="layout">
+          <div className="inputcontainer">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              name=""
+              id=""
+              cols={30}
+              rows={10}
+              className="textArea"
+              placeholder="paste your lyrics and chords here"
+            ></textarea>
+            <div className="buttons">
+              <button onClick={handleCheck}>Check Song</button>
+              <button data-tone={2} onClick={handleUpOneTone}>
+                <MdKeyboardDoubleArrowUp />
+                <span className="tooltiptext">move a tone up</span>
+              </button>
+              <button data-tone={1} onClick={handleUpOneTone}>
+                <MdKeyboardArrowUp />
+                <span className="tooltiptext">move a semitone up</span>
+              </button>
+              <button data-tone={-1} onClick={handleDownOneTone}>
+                <MdKeyboardArrowDown />
+                <span className="tooltiptext">move a semitone down</span>
+              </button>
+              <button data-tone={-2} onClick={handleUpOneTone}>
+                <MdKeyboardDoubleArrowDown />
+                <span className="tooltiptext">move a tone down</span>
+              </button>
+              <button onClick={handleSave}>SAVE</button>
+            </div>
+            <div className="title">transposed semitones: <span className="howMuch">{howMuch}</span></div>
+
+          </div>
+        </div>
+        <input type="text" placeholder="title song here" className="inputTitle" value={inputTitle} onChange={(e) => setInputTitle(e.target.value)} />
       </div>
-      <input type="text" placeholder="title song here" className="inputTitle" value={inputTitle} onChange={(e) => setInputTitle(e.target.value)} />
     </div>
   )
 }
